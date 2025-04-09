@@ -285,7 +285,7 @@ export default function EditDealerCar() {
         <div>
           <form onSubmit={handleSubmit} className="w-full  md:w-[45rem]">
             <div className="flex justify-center">
-              <p className="text-3xl font-semibold m-4">Edit Dealer Car</p>
+              <p className="text-3xl font-semibold m-4">Edit Dealer Cars</p>
             </div>
             {/* first part */}
             <div className="md:flex gap-2">
@@ -484,6 +484,7 @@ export default function EditDealerCar() {
                   <option>2022</option>
                   <option>2023</option>
                   <option>2024</option>
+                  <option>2025</option>
                 </select>
               </div>
             </div>
@@ -834,7 +835,7 @@ export default function EditDealerCar() {
 
             <button
               type="submit"
-              className="p-3 mt-3 bg-indigo-400 rounded-md w-28 text-white mb-3"
+              className="p-3 mt-3 bg-indigo-200 rounded-md w-28 text-white mb-3"
               value="Add  Car"
             >
               {" "}
