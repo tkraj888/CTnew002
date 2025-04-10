@@ -1,44 +1,45 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import {  useNavigate } from "react-router-dom";
-import {
-  useGetbyUserCarIdQuery,
-} from "../services/carAPI";
+import { useNavigate } from "react-router-dom";
+import { useGetbyUserCarIdQuery } from "../services/carAPI";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import FavCard from "./FavCard";
-import {  fetchFavoriteCars } from "../pages/favoritesSlice";
+import { fetchFavoriteCars } from "../pages/favoritesSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { FiLoader } from 'react-icons/fi'; 
+import { FiLoader } from 'react-icons/fi';
+
 export function FavoritePage() {
   const dispatch = useDispatch();
   const favoriteCars = useSelector(state => state.favorites.favoriteCars);
   const token = Cookies.get("token");
-  const [loader , setLoader] = useState(true);
+  const [loader, setLoader] = useState(true);
   const navigate = useNavigate();
+
   let jwtDecodes;
   if (token) {
     jwtDecodes = jwtDecode(token);
   }
   const UserId = jwtDecodes?.userId;
+
   const {
     data: userCars,
     error,
     isLoading,
     refetch
   } = useGetbyUserCarIdQuery({ UserId });
-   useEffect(() => {
-    if(UserId){
-      dispatch(fetchFavoriteCars(UserId)); // dispatch the thunk function itself
+
+  useEffect(() => {
+    if (UserId) {
+      dispatch(fetchFavoriteCars(UserId));
       setLoader(false);
     }
-  }, [dispatch,UserId]);
-  
+  }, [dispatch, UserId]);
 
   if (loader) {
     return (
-      <div className="w-screen h-screen flex justify-center items-center p-8">
-        <FiLoader className="animate-spin text-blue-gray-800 h-16 w-16" />
+      <div className="w-screen h-screen flex justify-center items-center bg-gray-50">
+        <FiLoader className="animate-spin text-blue-600 h-16 w-16" />
       </div>
     );
   }
@@ -48,19 +49,23 @@ export function FavoritePage() {
     return null;
   }
 
-  // if (error && !isLoading && userCars) {
-  //   refetch();
-  // }
-
   return (
-    <>
-      <div className="text-3xl font-bold mt-3 ml-16 mb-6">Favourite Page</div>
-      <div className="md:grid md:grid-cols-2 md:mx-10 lg:grid lg:grid-cols-4 lg:mx-20 gap-x-4 gap-y-4">
-        {favoriteCars &&
-          favoriteCars?.map((data, key) => (
+    <div className="min-h-screen bg-gray-50 px-4 py-6">
+      <div className="text-center text-4xl font-extrabold text-blue-900 mb-8">
+        Favorite Cars
+      </div>
+
+      {favoriteCars && favoriteCars.length > 0 ? (
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mx-auto max-w-7xl">
+          {favoriteCars.map((data, key) => (
             <FavCard favoriteCarData={data} key={key} />
           ))}
-      </div>
-    </>
+        </div>
+      ) : (
+        <div className="text-center text-gray-500 text-lg mt-10">
+          You dont have any favorite cars yet.
+        </div>
+      )}
+    </div>
   );
 }
