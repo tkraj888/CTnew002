@@ -2,40 +2,48 @@
 
 import { Card, Typography } from "@material-tailwind/react";
 
-export default function DefaultTable({TABLE_HEAD,TABLE_ROWS}) {
-    return (
-      <Card className="h-full w-full overflow-scroll">
-        <table className="w-full min-w-max table-auto text-left">
-          <thead>
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th
-                  key={head}
-                  className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+export default function DefaultTable({ TABLE_HEAD, TABLE_ROWS }) {
+  return (
+    <Card className="h-full w-full overflow-auto shadow-lg rounded-lg border border-gray-200">
+      <table className="w-full min-w-max table-auto text-left bg-white rounded-lg">
+        <thead className="sticky top-0 z-10">
+          <tr>
+            {TABLE_HEAD.map((head) => (
+              <th
+                key={head}
+                className="bg-gradient-to-r from-indigo-500 to-blue-500 text-white p-4 text-sm font-semibold tracking-wide text-center"
+              >
+                <Typography
+                  variant="small"
+                  color="white"
+                  className="font-normal leading-none"
                 >
-                  <Typography
-                    variant="small"
-                    color="blue-gray"
-                    className="font-normal leading-none opacity-70"
-                  >
-                    {head}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE_ROWS.map(({ firstName, lastName, email,mobileno,city,address }, index) => {
+                  {head}
+                </Typography>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {TABLE_ROWS.map(
+            (
+              { firstName, lastName, email, mobileno, city, address },
+              index
+            ) => {
               const isLast = index === TABLE_ROWS.length - 1;
-              const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-   
+              const classes = isLast ? "p-4" : "p-4 border-b border-gray-200";
+              const rowBg = index % 2 === 0 ? "bg-gray-50" : "bg-white";
+
               return (
-                <tr key={firstName}>
+                <tr
+                  key={firstName}
+                  className={`${rowBg} hover:bg-blue-50 transition duration-150`}
+                >
                   <td className={classes}>
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-medium"
                     >
                       {firstName}
                     </Typography>
@@ -44,7 +52,7 @@ export default function DefaultTable({TABLE_HEAD,TABLE_ROWS}) {
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-medium"
                     >
                       {lastName}
                     </Typography>
@@ -53,7 +61,7 @@ export default function DefaultTable({TABLE_HEAD,TABLE_ROWS}) {
                     <Typography
                       variant="small"
                       color="blue-gray"
-                      className="font-normal"
+                      className="font-medium"
                     >
                       {email}
                     </Typography>
@@ -93,9 +101,10 @@ export default function DefaultTable({TABLE_HEAD,TABLE_ROWS}) {
                   </td>
                 </tr>
               );
-            })}
-          </tbody>
-        </table>
-      </Card>
-    );
-  }
+            }
+          )}
+        </tbody>
+      </table>
+    </Card>
+  );
+}
