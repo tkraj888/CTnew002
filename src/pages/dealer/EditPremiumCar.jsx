@@ -761,5 +761,4 @@ export default function EditPremiumCar() {
       </div>
     </>
   );
-}
-	  
+}	  
