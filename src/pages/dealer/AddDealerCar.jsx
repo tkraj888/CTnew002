@@ -196,7 +196,7 @@ export default function AddDealerCar() {
         <div>
           <form onSubmit={handleSubmit} className="w-full md:w-[50rem]">
             <div className="flex justify-center">
-              <p className="text-3xl font-semibold m-4">Add Dealer Car</p>
+              <p className="text-3xl font-semibold m-4">Add Dealer Cars</p>
             </div>
             <div className="md:flex gap-2">
             <div className="mt-5 w-full">
@@ -607,7 +607,7 @@ export default function AddDealerCar() {
 
           <button
             type="submit"
-            className="p-3 mt-3 bg-indigo-400 rounded-md w-28 text-white"
+            className="p-3 mt-3 bg-indigo-200 rounded-md w-28 text-white"
             value="Add  Car"
           >
             {" "}
