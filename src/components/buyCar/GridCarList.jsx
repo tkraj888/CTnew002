@@ -24,11 +24,11 @@ const GridCarList = ({ data, error, refetch, sortCriteria }) => {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-y-6 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 justify-center">
         {sortedPosts?.map((items, index) => {
           return (
-            <div key={index}>
-              <div className="flex">
+            <div key={index} className="w-full flex justify-center">
+              <div className="max-w-xs w-full">
                 <CardDefault data={items} Carid={items.carId} refetch={refetch} />
               </div>
             </div>
