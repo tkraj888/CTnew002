@@ -47,27 +47,26 @@ const BuyCar = () => {
 
   return (
     <>
-      <div className="container mx-auto mt-12">
-        <div className="grid grid-cols-1 gap-2 md:grid-cols-5 lg:grid-cols-4 lg:gap-6">
-          <div className="md:col-span-2 lg:col-span-1 top-0">
-            <FilterCars setUrlState={setUrllState} onFilterChange={refetch} />
-          </div>
-          <div className="md:col-span-3 lg:col-span-3 no-scrollbar">
-            {error?.status === 404 ? (
-              <div >
-                <div className="flex justify-center mt-14">
-                  <img
-                    className="w-40"
-                    src={emptyImage}
-                    alt="no data"
-                  />
-                </div>
-                <p className="flex justify-center text-2xl md:text-3xl font-semibold">No Data Available</p>
+      <div className="container mx-auto mt-12 px-4">
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-5xl font-bold text-left">Buy or Test-Drive a Car...</h2>
+          <FilterCars setUrlState={setUrllState} onFilterChange={refetch} />
+        </div>
+        <div className="flex flex-wrap gap-6">
+          {error?.status === 404 ? (
+            <div className="w-full">
+              <div className="flex justify-center mt-14">
+                <img
+                  className="w-40"
+                  src={emptyImage}
+                  alt="no data"
+                />
               </div>
-            ) : (
-              <GridCarList data={data} error={error} refetch={refetch} />
-            )}
-          </div>
+              <p className="flex justify-center text-2xl md:text-3xl font-semibold">No Data Available</p>
+            </div>
+          ) : (
+            <GridCarList data={data} error={error} refetch={refetch} />
+          )}
         </div>
       </div>
     </>

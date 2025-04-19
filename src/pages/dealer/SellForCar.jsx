@@ -363,8 +363,7 @@ const SellForCar = () => {
       },
     },
   ];
-  
-    
+
   let dealersCarData;
   if (isLoadingActive) {
     return (
@@ -376,6 +375,7 @@ const SellForCar = () => {
   } else {
     dealersCarData = data?.list;
   }
+
   return (
     <div 
   style={{
@@ -392,6 +392,14 @@ const SellForCar = () => {
         minHeight: "100vh",
         padding: "20px"
       }}>
+      <div className="flex flex-col items-center w-full mb-4">
+        <Typography variant="h3" color="blue-gray" className="text-center">
+          Car Listing
+        </Typography>
+        <Typography color="gray" className="mt-1 font-normal text-center">
+          See Information About All Cars
+        </Typography>
+      </div>
      <div className="justify-center lg:grid lg:grid-cols-5 md:grid md:grid-cols-3">
         <div className="p-5">
           <Card className="w-full">
@@ -462,6 +470,7 @@ const SellForCar = () => {
       {errorActive?.status === 404 && list?.length === 0 ? (
         <div>
           <p>No Data Available</p>
+
           {userRole === "DEALER" ? (
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
               <Link to={`/dealer/${id}/addcar`}>
@@ -469,11 +478,12 @@ const SellForCar = () => {
               </Link>
             </div>
           ) : (
-            <p className="hover:text-blue-900"></p>
+            <p className="hover:text-blue-900"> </p>
           )}
         </div>
       ) : (
         <div>
+          {/* <p>Sell for car</p> */}
           <Card className="h-full w-full">
             <Dialog open={open} handler={handleOpen}>
               <DialogBody className="flex justify-center">
@@ -496,15 +506,6 @@ const SellForCar = () => {
               </DialogFooter>
             </Dialog>
             <CardHeader floated={false} shadow={false} className="rounded-none">
-  <div className="flex flex-col items-center w-full">
-    <Typography variant="h4" color="blue-gray" className="text-center">
-      Car Listing
-    </Typography>
-    <Typography color="gray" className="mt-1 font-normal text-center">
-      See Information About All Cars
-    </Typography>
-  </div>
-
               <div className="overflow-scroll px-0">
                 {isLoadingActive || isLoadingPending || isLoadingSell || isLoadingDeactive ? (
                   <p>Loading data...</p>
@@ -602,12 +603,6 @@ const SellForCar = () => {
             <div className="flex justify-end space-x-4">
               <button
                 onClick={activateCarStatus}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-              >
-                Confirm
-              </button>
-              <button
-                onClick={handleOpenAactivate}
                 className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
               >
                 Cancel

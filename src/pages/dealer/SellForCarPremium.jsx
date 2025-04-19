@@ -138,25 +138,25 @@ const SellForCarPremium = () => {
     switch (selectedStatus) {
       case active:
         return activeItems.length > 0 ? (
-          <TableComponent columns={columns} data={activeItems} />
+          <TableComponent columns={columns} data={activeItems} className="border border-gray-200" />
         ) : (
           <p>No active cars available</p>
         );
       case pending:
         return pendingItems.length > 0 ? (
-          <TableComponent columns={columns} data={pendingItems} />
+          <TableComponent columns={columns} data={pendingItems} className="border border-gray-200" />
         ) : (
           <p>No pending cars available</p>
         );
       case sell:
         return sellItems.length > 0 ? (
-          <TableComponent columns={columns} data={sellItems} />
+          <TableComponent columns={columns} data={sellItems} className="border border-gray-200" />
         ) : (
           <p>No sold cars available</p>
         );
       case deactive:
         return deactiveItems.length > 0 ? (
-          <TableComponent columns={columns} data={deactiveItems} />
+          <TableComponent columns={columns} data={deactiveItems} className="border border-gray-200" />
         ) : (
           <p>No deactivated cars available</p>
         );
@@ -345,11 +345,6 @@ const SellForCarPremium = () => {
         return (
           <div>
             <div className="flex gap-2 justify-center items-center  ">
-              {/* <Link to={`/car/${cell.row.values.carId}/pendinguser`}>
-                <div className="w- h-">
-                  <MdPendingActions color="#b09b12" className="h-6 w-6" />
-                </div>
-              </Link> */}
               <Link to={`/carlist/cardetails/premium/${cell.row.values.carId}`}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -386,41 +381,25 @@ const SellForCarPremium = () => {
                   </svg>
                 </Link>
               ) : null}
-              {/* <div onClick={() => handleOpen(cell.row.values.carId)}>
-                <Tooltip content="Delete">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6 cursor-pointer"
-                    color="red"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                    />
-                  </svg>
-                </Tooltip>
-              </div> */}
-
               {cell.row.values.carStatus == "ACTIVE" && (
-                <p
+                <Button
                   onClick={() => handleOpenDeactivate(cell.row.values.carId)}
-                  className="cursor-pointer"
+                  color="red"
+                  size="sm"
+                  variant="outlined"
                 >
                   Deactivate
-                </p>
+                </Button>
               )}
               {cell.row.values.carStatus == "DEACTIVATE" && (
-                <p
+                <Button
                   onClick={() => handleOpenAactivate(cell.row.values.carId)}
-                  className="cursor-pointer"
+                  color="green"
+                  size="sm"
+                  variant="outlined"
                 >
                   Activate
-                </p>
+                </Button>
               )}
             </div>
           </div>
@@ -432,8 +411,9 @@ const SellForCarPremium = () => {
   let dealersCarData;
   if (isLoadingActive) {
     return (
-      <div className="w-screen h-screen flex justify-center items-center p-8">
+      <div className="w-screen h-screen flex flex-col justify-center items-center p-8">
         <FiLoader className="animate-spin text-blue-gray-800 h-16 w-16" />
+        <Typography className="mt-4 text-center">Loading data, please wait...</Typography>
       </div>
     );
   } else {
@@ -441,399 +421,291 @@ const SellForCarPremium = () => {
   }
 
   return (
-    <>
-      <div className="justify-center  lg:grid lg:grid-cols-5  md:grid md:grid-cols-3">
-        <div className="p-5">
-          <Card className="w-full">
-            <CardBody className="justify-center items-center">
-              <ApexCharts
-                options={{
-                  chart: { type: "radialBar", height: 200 },
-                  plotOptions: {
-                    radialBar: {
-                      hollow: { size: "40%" },
-                      dataLabels: {
-                        name: {
-                          show: false, // Hide the series name
-                        },
-                        value: {
-                          fontSize: "16px", // Adjust font size if needed
-                          color: "#000", // Set text color
-                          offsetY: +7,
-                          show: true, // Ensure the percentage is shown
-                        },
-                      },
-                    },
-                  },
-                  colors: ["#007BFF"],
-                  labels: [], // Clear any additional labels if needed
-                  tooltip: {
-                    enabled: false, // Disable tooltip if not needed
-                  },
-                }}
-                series={[PertotalCars || 0]} // Default to 0% if PertotalCars is undefined or null
-                type="radialBar"
-                height={200}
-              />
-              <Typography className="flex justify-center items-center font-bold">
-                Total Cars
-              </Typography>
-              <Typography className="flex justify-center items-center font-bold">
-                {totalCars}
-              </Typography>
-            </CardBody>
-          </Card>
+    <div
+      style={{
+        backgroundImage: "url('/CarsImages/pic.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        minHeight: "100vh",
+        padding: "20px",
+      }}
+    >
+      <div
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.85)",
+          minHeight: "100vh",
+          padding: "20px",
+        }}
+      >
+        <div className="flex flex-col items-center w-full mb-4">
+          <Typography variant="h3" color="blue-gray" className="text-center">
+            Premium Car Listing
+          </Typography>
+          <Typography color="gray" className="mt-1 font-normal text-center">
+            See Information About All Premium Cars
+          </Typography>
         </div>
-
-        <div
-          onClick={() => {
-            setSelectedStatus(active);
-            setPageNo(0);
-          }}
-          className="p-5"
-        >
-          {/* <div className="text-4xl font-bold text-white">{activeCars}/{totalCars}</div>
-          <div className="mt-2 font-medium">Active Cars</div> */}
-          <Card className="w-full">
-            <CardBody className=" justify-center items-center">
-              <ApexCharts
-                options={{
-                  chart: { type: "radialBar", height: 200 },
-                  plotOptions: {
-                    radialBar: {
-                      hollow: { size: "40%" },
-                      dataLabels: {
-                        name: {
-                          show: false, // Hide the series name
-                        },
-                        value: {
-                          fontSize: "16px", // Adjust font size if needed
-                          color: "#000", // Set text color
-                          offsetY: +7,
-                          show: true, // Ensure the percentage is shown
-                        },
-                      },
-                    },
-                  },
-                  colors: ["#28A745"],
-                  labels: [], // Clear any additional labels if needed
-                  tooltip: {
-                    enabled: false, // Keep the tooltip enabled if you want to show percentage on hover
-                  },
-                }}
-                series={[perActive || 0]}
-                type="radialBar"
-                height={200}
-              />
-              <Typography className="flex justify-center items-center font-bold">
-                Active Cars
-              </Typography>
-              <Typography className="flex justify-center items-center font-bold">
-                {activeCars}
-              </Typography>
-            </CardBody>
-          </Card>
-        </div>
-
-        <div
-          onClick={() => {
-            setSelectedStatus(pending);
-            setPageNo(0);
-          }}
-          className="p-5"
-        >
-          {/* <div className="text-4xl font-bold text-white">{pendingCars}/{totalCars}</div>
-          <div className="mt-2 font-medium">Pending Cars</div> */}
-
-          <Card className="w-full">
-            <CardBody className=" justify-center items-center">
-              <ApexCharts
-                options={{
-                  chart: { type: "radialBar", height: 200 },
-                  plotOptions: {
-                    radialBar: {
-                      hollow: { size: "40%" },
-                      dataLabels: {
-                        name: {
-                          show: false, // Hide the series name
-                        },
-                        value: {
-                          fontSize: "16px", // Adjust font size if needed
-                          color: "#000", // Set text color
-                          offsetY: +7,
-                          show: true, // Ensure the percentage is shown
-                        },
-                      },
-                    },
-                  },
-                  colors: ["#FFC107"],
-                  labels: [], // Clear any additional labels if needed
-                  tooltip: {
-                    enabled: false, // Keep the tooltip enabled if you want to show percentage on hover
-                  },
-                }}
-                series={[perPending || 0]}
-                type="radialBar"
-                height={200}
-              />
-              <Typography className="flex justify-center items-center font-bold">
-                Pending Cars
-              </Typography>
-              <Typography className="flex justify-center items-center font-bold">
-                {pendingCars}
-              </Typography>
-            </CardBody>
-          </Card>
-        </div>
-        {/* <div onClick={handleFilterSellCars} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/6 p-5 text-center bg-blue-500 rounded-2xl shadow-xl sm:mb-2 mb-5 sm:mr-5 cursor-pointer">
-          <div className="text-4xl font-bold text-white">{sellCars}/{totalCars}</div>
-          <div className="mt-2 font-medium">Sold Cars</div>
-        </div> */}
-        <div
-          onClick={() => {
-            setSelectedStatus(sell);
-            setPageNo(0);
-          }}
-          className="p-5"
-        >
-          <Card className="w-full">
-            <CardBody className=" justify-center items-center">
-              <ApexCharts
-                options={{
-                  chart: { type: "radialBar", height: 200 },
-                  plotOptions: {
-                    radialBar: {
-                      hollow: { size: "40%" },
-                      dataLabels: {
-                        name: {
-                          show: false, // Hide the series name
-                        },
-                        value: {
-                          fontSize: "16px", // Adjust font size if needed
-                          color: "#000", // Set text color
-                          offsetY: +7,
-                          show: true, // Ensure the percentage is shown
-                        },
-                      },
-                    },
-                  },
-                  colors: ["#87CEEB"],
-                  labels: [], // Clear any additional labels if needed
-                  tooltip: {
-                    enabled: false, // Keep the tooltip enabled if you want to show percentage on hover
-                  },
-                }}
-                series={[perSold || 0]}
-                type="radialBar"
-                height={200}
-              />
-              <Typography className="flex justify-center items-center font-bold">
-                Sold Cars
-              </Typography>
-              <Typography className="flex justify-center items-center font-bold">
-                {sellCars}
-              </Typography>
-            </CardBody>
-          </Card>
-        </div>
-        <div
-          onClick={() => {
-            setSelectedStatus(deactive);
-            setPageNo(0);
-          }}
-          className="p-5"
-        >
-          {/* <div className="text-4xl font-bold text-white">{deactiveCars}/{totalCars}</div>
-          <div className="mt-2 font-medium">Deactive Cars</div> */}
-          <Card className="w-full">
-            <CardBody className=" justify-center items-center">
-              <ApexCharts
-                options={{
-                  chart: { type: "radialBar", height: 200 },
-                  plotOptions: {
-                    radialBar: {
-                      hollow: { size: "40%" },
-                      dataLabels: {
-                        name: {
-                          show: false, // Hide the series name
-                        },
-                        value: {
-                          fontSize: "16px", // Adjust font size if needed
-                          color: "#000", // Set text color
-                          offsetY: +7,
-                          show: true, // Ensure the percentage is shown
-                        },
-                      },
-                    },
-                  },
-                  colors: ["#FF0000"],
-                  labels: [], // Clear any additional labels if needed
-                  tooltip: {
-                    enabled: false, // Keep the tooltip enabled if you want to show percentage on hover
-                  },
-                }}
-                series={[perDeactive || 0]}
-                type="radialBar"
-                height={200}
-              />
-              <Typography className="flex justify-center items-center font-bold">
-                Deactive Cars
-              </Typography>
-              <Typography className="flex justify-center items-center font-bold">
-                {deactiveCars}
-              </Typography>
-            </CardBody>
-          </Card>
-        </div>
-      </div>
-      {errorActive?.status === 404 && list?.length === 0 ? (
-        <div>
-          <p>No Data Available</p>
-
-          {userRole === "DEALER" ? (
-            <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Link to={`/dealer/premium/${id}/addcar`}>
-                <Button color="indigo">Add Premium Car</Button>
-              </Link>
-            </div>
-          ) : (
-            <p className="hover:text-blue-900"> </p>
-          )}
-        </div>
-      ) : (
-        <div>
-          {/* <p>Sell for car</p> */}
-          <Card className="h-full w-full">
-            <Dialog open={open} handler={handleOpen}>
-              <DialogBody className="flex justify-center">
-                <p className="font-semibold text-xl">
-                  Are you sure want to delete?
-                </p>
-              </DialogBody>
-              <DialogFooter className="flex justify-center">
-                <Button
-                  variant="text"
-                  color="red"
-                  onClick={handleOpen}
-                  className="mr-1"
+        <div className="justify-center lg:grid lg:grid-cols-5 md:grid md:grid-cols-3">
+          <div className="p-5">
+            <Card className="w-full">
+              <CardBody className="justify-center items-center">
+                <Typography
+                  variant="h2"
+                  className="flex justify-center items-center font-bold"
                 >
-                  <span>Cancel</span>
-                </Button>
-                <Button variant="gradient" color="green" onClick={handleOpen1}>
-                  <span>Confirm</span>
-                </Button>
-              </DialogFooter>
-            </Dialog>
-            <CardHeader floated={false} shadow={false} className="rounded-none">
-              <div className=" flex items-center justify-between gap-8">
-                <div>
-                  <Typography variant="h5" color="blue-gray">
-                    Car Listing
-                  </Typography>
-                  <Typography color="gray" className="mt-1 font-normal">
-                    See Information About All Cars
-                  </Typography>
-                </div>
+                  {totalCars}
+                </Typography>
+                <Typography className="flex justify-center items-center font-bold">
+                  Total Cars
+                </Typography>
+              </CardBody>
+            </Card>
+          </div>
 
-                {/* Removed the Add Premium Car button from the top of the table */}
-              </div>
+          <div
+            onClick={() => {
+              setSelectedStatus(active);
+              setPageNo(0);
+            }}
+            className="p-5"
+          >
+            <Card className="w-full">
+              <CardBody className="justify-center items-center">
+                <Typography
+                  variant="h2"
+                  className="flex justify-center items-center font-bold"
+                  style={{ color: "#28A745" }}
+                >
+                  {activeCars}
+                </Typography>
+                <Typography className="flex justify-center items-center font-bold">
+                  Active Cars
+                </Typography>
+              </CardBody>
+            </Card>
+          </div>
 
-              <div className="overflow-scroll px-0">
-                {isLoadingActive ||
-                isLoadingPending ||
-                isLoadingSell ||
-                isLoadingDeactive ? (
-                  <p>Loading data...</p>
-                ) : (
-                  renderTable()
-                )}
+          <div
+            onClick={() => {
+              setSelectedStatus(pending);
+              setPageNo(0);
+            }}
+            className="p-5"
+          >
+            <Card className="w-full">
+              <CardBody className="justify-center items-center">
+                <Typography
+                  variant="h2"
+                  className="flex justify-center items-center font-bold"
+                  style={{ color: "#FFC107" }}
+                >
+                  {pendingCars}
+                </Typography>
+                <Typography className="flex justify-center items-center font-bold">
+                  Pending Cars
+                </Typography>
+              </CardBody>
+            </Card>
+          </div>
+
+          <div
+            onClick={() => {
+              setSelectedStatus(sell);
+              setPageNo(0);
+            }}
+            className="p-5"
+          >
+            <Card className="w-full">
+              <CardBody className="justify-center items-center">
+                <Typography
+                  variant="h2"
+                  className="flex justify-center items-center font-bold"
+                  style={{ color: "#87CEEB" }}
+                >
+                  {sellCars}
+                </Typography>
+                <Typography className="flex justify-center items-center font-bold">
+                  Sold Cars
+                </Typography>
+              </CardBody>
+            </Card>
+          </div>
+
+          <div
+            onClick={() => {
+              setSelectedStatus(deactive);
+              setPageNo(0);
+            }}
+            className="p-5"
+          >
+            <Card className="w-full">
+              <CardBody className="justify-center items-center">
+                <Typography
+                  variant="h2"
+                  className="flex justify-center items-center font-bold"
+                  style={{ color: "#FF0000" }}
+                >
+                  {deactiveCars}
+                </Typography>
+                <Typography className="flex justify-center items-center font-bold">
+                  Deactive Cars
+                </Typography>
+              </CardBody>
+            </Card>
+          </div>
+        </div>
+
+        {errorActive?.status === 404 && list?.length === 0 ? (
+          <div>
+            <p>No Data Available</p>
+
+            {userRole === "DEALER" ? (
+              <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
+                <Link to={`/dealer/premium/${id}/addcar`}>
+                  <Button color="indigo">Add Premium Car</Button>
+                </Link>
               </div>
-            </CardHeader>
-            {errorActive ? (
-              <p className="text-center">car is not found</p>
             ) : (
-              <div></div>
+              <p className="hover:text-blue-900"> </p>
             )}
+          </div>
+        ) : (
+          <div>
+            {/* <p>Sell for car</p> */}
+            <Card className="h-full w-full">
+              <Dialog open={open} handler={handleOpen}>
+                <DialogBody className="flex justify-center">
+                  <p className="font-semibold text-xl">
+                    Are you sure want to delete?
+                  </p>
+                </DialogBody>
+                <DialogFooter className="flex justify-center">
+                  <Button
+                    variant="text"
+                    color="red"
+                    onClick={handleOpen}
+                    className="mr-1"
+                  >
+                    <span>Cancel</span>
+                  </Button>
+                  <Button variant="gradient" color="green" onClick={handleOpen1}>
+                    <span>Confirm</span>
+                  </Button>
+                </DialogFooter>
+              </Dialog>
+              <CardHeader floated={false} shadow={false} className="rounded-none">
+                <div className="overflow-scroll px-0">
+                  {isLoadingActive ||
+                  isLoadingPending ||
+                  isLoadingSell ||
+                  isLoadingDeactive ? (
+                    <p>Loading data...</p>
+                  ) : (
+                    renderTable()
+                  )}
+                </div>
+              </CardHeader>
+              {errorActive ? (
+                <p className="text-center">car not found</p>
+              ) : (
+                <div></div>
+              )}
 
-<CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
- <Typography color="blue-gray" className="font-normal">
- Page {pageNo + 1}
- </Typography>
- <div className="flex gap-2"> {/* Removed justify-center here */}
- <Button
- variant="outlined"
- size="sm"
- disabled={pageNo <= 0}
- onClick={() => setPageNo((a) => a - 1)}
- >
- Previous
- </Button>
- <Link to={`/dealer/premium/${id}/addcar`}>
- <Button color="indigo">Add Premium Car</Button>
- </Link>
- <Button
- variant="outlined"
- size="sm"
- onClick={nextHandler}
- disabled={list?.length < 10}
- >
- Next
- </Button>
- </div>
-</CardFooter>
-          </Card>
-        </div>
-      )}
+              <CardFooter className="flex flex-col items-center border-t border-blue-gray-50 p-4">
+                {userRole === "DEALER" && (
+                  <div className="absolute right-4 bottom-4">
+                    <Link to={`/dealer/premium/${id}/addcar`}>
+                      <Button color="indigo">Add Premium Car</Button>
+                    </Link>
+                  </div>
+                )}
+                <div className="flex gap-2 items-center">
+                  <Button
+                    variant="outlined"
+                    size="sm"
+                    disabled={pageNo <= 0}
+                    onClick={() => setPageNo((a) => a - 1)}
+                  >
+                    Previous
+                  </Button>
 
-      {/* Dectivate Popup */}
-      {openDeactivate && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm mx-3">
-            <h2 className="text-lg font-semibold mb-4">
-              Are you sure you want to deactivate?
-            </h2>
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={deactivateStatus}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-              >
-                Confirm
-              </button>
-              <button
-                onClick={handleOpenDeactivate}
-                className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
-              >
-                Cancel
-              </button>
+                  {Array.from({ length: Math.ceil(totalCars / 10) }).map((_, i) => {
+                    // Only show page number if it has data
+                    const hasData = i * 10 < totalCars;
+                    return (
+                      hasData && (
+                        <Button
+                          key={i}
+                          variant={pageNo === i ? "filled" : "outlined"}
+                          size="sm"
+                          onClick={() => setPageNo(i)}
+                          className="min-w-[40px]"
+                        >
+                          {i + 1}
+                        </Button>
+                      )
+                    );
+                  })}
+
+                  <Button
+                    variant="outlined"
+                    size="sm"
+                    onClick={nextHandler}
+                    disabled={pageNo >= Math.ceil(totalCars / 10) - 1}
+                  >
+                    Next
+                  </Button>
+                </div>
+                <Typography color="blue-gray" className="font-normal mt-2">
+                  Page {pageNo + 1} of {Math.ceil(totalCars / 10)}
+                </Typography>
+              </CardFooter>
+            </Card>
+          </div>
+        )}
+        {/* Dectivate Popup */}
+        {openDeactivate && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm mx-3">
+              <h2 className="text-lg font-semibold mb-4">Are you sure you want to deactivate?</h2>
+              <div className="flex justify-end space-x-4">
+                <button
+                  onClick={deactivateStatus}
+                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={handleOpenDeactivate}
+                  className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {openActivate && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm mx-auto">
-            <h2 className="text-lg font-semibold mb-4">
-              Are you sure you want to Activate?
-            </h2>
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={activateCarStatus}
-                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-              >
-                Confirm
-              </button>
-              <button
-                onClick={handleOpenAactivate}
-                className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
-              >
-                Cancel
-              </button>
+        {openActivate && (
+          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50">
+            <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm mx-auto">
+              <h2 className="text-lg font-semibold mb-4">
+                Are you sure you want to Activate?
+              </h2>
+              <div className="flex justify-end space-x-4">
+                <button
+                  onClick={handleOpenAactivate}
+                  className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                >
+                  Cancel
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+    </div>
   );
 };
 
