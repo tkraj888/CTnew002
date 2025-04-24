@@ -244,42 +244,42 @@ const FilterCars = ({ setUrlState }) => {
             </div>
                 <div className="space-y-4">
                   <form onSubmit={submitHandle}>
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center mb-4">
                     <label className="font-bold text-lg">Sort by:</label>
-                    <select className="border rounded p-2">
+                    <select className="border rounded p-2 w-40">
                       <option value="name">By Name (A-Z)</option>
                       <option value="price">By Price (Low to High)</option>
                     </select>
                   </div>
                 <div className="space-y-4">
                   <div className="flex flex-col gap-3">
-                    <div className="flex justify-between">
+                    <div className="flex flex-col md:flex-row md:justify-between gap-3">
                       <TextField
                         label="Enter Minimum Price"
                         type="text"
                         value={minPrice}
                         onChange={(e) => handlePriceChange(e, true)}
-                        className="w-full"
+                        className="w-full md:w-[48%]"
                       />
                       <TextField
                         label="Enter Maximum Price"
                         type="text"
                         value={maxPrice}
                         onChange={(e) => handlePriceChange(e, false)}
-                        className="w-full"
+                        className="w-full md:w-[48%]"
                       />
                     </div>
                     {priceError && <p className="text-red-500">{priceError}</p>}
                   </div>
                 </div>
-                <div>
+                <div className="flex flex-col md:flex-row md:justify-between gap-3">
                   <Autocomplete
                     id="area-autocomplete"
-                    className="my-1"
+                    className="my-1 w-full md:w-[48%]"
                     freeSolo
                     options={AreaData}
                     getOptionLabel={(option) => option.area}
-                    sx={{ width: "50%", background: "White" }}
+                    sx={{ background: "White" }}
                     value={filterForm.area ? { area: filterForm.area } : { area: "" }}
                     onInputChange={(event, newInputValue) => {
                       setFilterForm((prevForm) => ({
@@ -300,11 +300,11 @@ const FilterCars = ({ setUrlState }) => {
 
                   <Autocomplete
                     id="year-autocomplete"
-                    className="my-1"
+                    className="my-1 w-full md:w-[48%]"
                     freeSolo
                     options={Year}
                     getOptionLabel={(option) => option.year.toString()}
-                    sx={{ width: "40%", background: "White" }}
+                    sx={{ background: "White" }}
                     value={filterForm.year ? { year: filterForm.year } : { year: "" }}
                     onInputChange={(event, newInputValue) => {
                       setFilterForm((prevForm) => ({
@@ -323,14 +323,14 @@ const FilterCars = ({ setUrlState }) => {
                     )}
                   />
                 </div>
-                <div>
+                <div className="flex flex-col md:flex-row md:justify-between gap-3">
                   <Autocomplete
                     id="brand-autocomplete"
-                    className="my-1"
+                    className="my-1 w-full md:w-[48%]"
                     freeSolo
                     options={brands}
                     getOptionLabel={(option) => option}
-                    sx={{ width: "50%", background: "White" }}
+                    sx={{ background: "White" }}
                     value={filterForm.brand}
                     onChange={handleBrandChange}
                     renderInput={(params) => (
@@ -340,11 +340,11 @@ const FilterCars = ({ setUrlState }) => {
 
                   <Autocomplete
                     id="model-autocomplete"
-                    className="my-1"
+                    className="my-1 w-full md:w-[48%]"
                     freeSolo
                     options={modelOptions}
                     getOptionLabel={(option) => option}
-                    sx={{ width: "45%", background: "White" }}
+                    sx={{ background: "White" }}
                     value={filterForm.model}
                     onChange={handleModelChange}
                     renderInput={(params) => (
@@ -352,14 +352,14 @@ const FilterCars = ({ setUrlState }) => {
                     )}
                   />
                 </div>
-                <div>
+                <div className="flex flex-col md:flex-row md:justify-between gap-3">
                   <Autocomplete
                     id="fueltype-autocomplete"
-                    className="my-1"
+                    className="my-1 w-full md:w-[48%]"
                     freeSolo
                     options={FuelType}
                     getOptionLabel={(option) => option.fuelType}
-                    sx={{ width: "40%", background: "White" }}
+                    sx={{ background: "White" }}
                     value={filterForm.fuelType ? { fuelType: filterForm.fuelType } : { fuelType: "" }}
                     onInputChange={(event, newInputValue) => {
                       setFilterForm((prevForm) => ({
@@ -380,11 +380,11 @@ const FilterCars = ({ setUrlState }) => {
 
                   <Autocomplete
                     id="transmission-autocomplete"
-                    className="my-1"
+                    className="my-1 w-full md:w-[48%]"
                     freeSolo
                     options={Transmission}
                     getOptionLabel={(option) => option.transmission}
-                    sx={{ width: "50%", background: "White" }}
+                    sx={{ background: "White" }}
                     value={filterForm.transmission ? { transmission: filterForm.transmission } : { transmission: "" }}
                     onInputChange={(event, newInputValue) => {
                       setFilterForm((prevForm) => ({
@@ -403,11 +403,11 @@ const FilterCars = ({ setUrlState }) => {
                     )}
                   />
                 </div>
-                <div className="flex gap-2 md:flex-col lg:flex">
-                  <Button type="submit" className="bg-green-500 text-white text-sm">
+                <div className="flex flex-col md:flex-row md:justify-center gap-2 mt-4">
+                  <Button type="submit" className="bg-green-500 text-white text-sm w-full md:w-auto">
                     Search
                   </Button>
-                  <Button onClick={resetForm} className="bg-red-500 text-white text-sm">
+                  <Button onClick={resetForm} className="bg-red-500 text-white text-sm w-full md:w-auto">
                     Reset
                   </Button>
                </div>
