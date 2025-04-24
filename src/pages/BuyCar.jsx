@@ -49,7 +49,7 @@ const BuyCar = () => {
     <>
       <div className="container mx-auto mt-12 px-4">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-5xl font-bold text-left">Buy or Test-Drive a Car...</h2>
+          <h4 className="text-2xl text-left">BUY CAR</h4>
           <FilterCars setUrlState={setUrllState} onFilterChange={refetch} />
         </div>
         <div className="flex flex-wrap gap-6">

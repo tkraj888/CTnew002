@@ -137,26 +137,26 @@ const SellForCarPremium = () => {
   const renderTable = () => {
     switch (selectedStatus) {
       case active:
-        return activeItems.length > 0 ? (
-          <TableComponent columns={columns} data={activeItems} className="border border-gray-200" />
+          return activeItems.length > 0 ? (
+          <TableComponent columns={columns} data={activeItems} className="border border-gray-200 min-w-[600px]" />
         ) : (
           <p>No active cars available</p>
         );
       case pending:
-        return pendingItems.length > 0 ? (
-          <TableComponent columns={columns} data={pendingItems} className="border border-gray-200" />
+          return pendingItems.length > 0 ? (
+          <TableComponent columns={columns} data={pendingItems} className="border border-gray-200 min-w-[600px]" />
         ) : (
           <p>No pending cars available</p>
         );
       case sell:
-        return sellItems.length > 0 ? (
-          <TableComponent columns={columns} data={sellItems} className="border border-gray-200" />
+          return sellItems.length > 0 ? (
+          <TableComponent columns={columns} data={sellItems} className="border border-gray-200 min-w-[600px]" />
         ) : (
           <p>No sold cars available</p>
         );
       case deactive:
-        return deactiveItems.length > 0 ? (
-          <TableComponent columns={columns} data={deactiveItems} className="border border-gray-200" />
+          return deactiveItems.length > 0 ? (
+          <TableComponent columns={columns} data={deactiveItems} className="border border-gray-200 min-w-[600px]" />
         ) : (
           <p>No deactivated cars available</p>
         );
@@ -595,14 +595,17 @@ const SellForCarPremium = () => {
                 </DialogFooter>
               </Dialog>
               <CardHeader floated={false} shadow={false} className="rounded-none">
-                <div className="overflow-scroll px-0">
+                <div className="overflow-x-auto w-full">
                   {isLoadingActive ||
                   isLoadingPending ||
                   isLoadingSell ||
                   isLoadingDeactive ? (
                     <p>Loading data...</p>
                   ) : (
-                    renderTable()
+                    <>
+                      {renderTable()}
+                      <p className="text-sm text-gray-500 mt-2 block sm:hidden">Swipe left or right to scroll the table</p>
+                    </>
                   )}
                 </div>
               </CardHeader>
@@ -612,15 +615,15 @@ const SellForCarPremium = () => {
                 <div></div>
               )}
 
-              <CardFooter className="flex flex-col items-center border-t border-blue-gray-50 p-4">
+              <CardFooter className="flex flex-col sm:flex-row sm:justify-between items-center border-t border-blue-gray-50 p-4 space-y-4 sm:space-y-0">
                 {userRole === "DEALER" && (
-                  <div className="absolute right-4 bottom-4">
+                  <div>
                     <Link to={`/dealer/premium/${id}/addcar`}>
                       <Button color="indigo">Add Premium Car</Button>
                     </Link>
                   </div>
                 )}
-                <div className="flex gap-2 items-center">
+                <div className="flex flex-wrap gap-2 items-center justify-center sm:justify-start">
                   <Button
                     variant="outlined"
                     size="sm"

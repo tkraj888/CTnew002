@@ -105,25 +105,25 @@ const SellForCar = () => {
     switch (selectedStatus) {
       case active:
         return activeItems.length > 0 ? (
-          <TableComponent columns={columns} data={activeItems} className="border border-gray-200" />
+          <TableComponent columns={columns} data={activeItems} className="border border-gray-200 min-w-[600px]" />
         ) : (
           <p>No active cars available</p>
         );
       case pending:
         return pendingItems.length > 0 ? (
-          <TableComponent columns={columns} data={pendingItems} className="border border-gray-200" />
+          <TableComponent columns={columns} data={pendingItems} className="border border-gray-200 min-w-[600px]" />
         ) : (
           <p>No pending cars available</p>
         );
       case sell:
         return sellItems.length > 0 ? (
-          <TableComponent columns={columns} data={sellItems} className="border border-gray-200" />
+          <TableComponent columns={columns} data={sellItems} className="border border-gray-200 min-w-[600px]" />
         ) : (
           <p>No sold cars available</p>
         );
       case deactive:
         return deactiveItems.length > 0 ? (
-          <TableComponent columns={columns} data={deactiveItems} className="border border-gray-200" />
+          <TableComponent columns={columns} data={deactiveItems} className="border border-gray-200 min-w-[600px]" />
         ) : (
           <p>No deactivated cars available</p>
         );
@@ -505,12 +505,15 @@ const SellForCar = () => {
                 </Button>
               </DialogFooter>
             </Dialog>
-            <CardHeader floated={false} shadow={false} className="rounded-none">
-              <div className="overflow-scroll px-0">
+              <CardHeader floated={false} shadow={false} className="rounded-none">
+              <div className="overflow-x-auto w-full">
                 {isLoadingActive || isLoadingPending || isLoadingSell || isLoadingDeactive ? (
                   <p>Loading data...</p>
                 ) : (
-                  renderTable()
+                  <>
+                    {renderTable()}
+                    <p className="text-sm text-gray-500 mt-2 block sm:hidden">Swipe left or right to scroll the table</p>
+                  </>
                 )}
               </div>
             </CardHeader>
@@ -520,15 +523,15 @@ const SellForCar = () => {
               <div></div>
             )}
 
-<CardFooter className="flex flex-col items-center border-t border-blue-gray-50 p-4">
-{userRole === "DEALER" && (
-    <div className="absolute right-4 bottom-4">
+<CardFooter className="flex flex-col sm:flex-row sm:justify-between items-center border-t border-blue-gray-50 p-4 space-y-4 sm:space-y-0">
+  {userRole === "DEALER" && (
+    <div>
       <Link to={`/dealer/${id}/addcar`}>
         <Button color="indigo">Add Car</Button>
       </Link>
     </div>
   )}
-  <div className="flex gap-2 items-center">
+  <div className="flex flex-wrap gap-2 items-center justify-center sm:justify-start">
     <Button
       variant="outlined"
       size="sm"
@@ -537,20 +540,22 @@ const SellForCar = () => {
     >
       Previous
     </Button>
-    
+
     {Array.from({ length: Math.ceil(totalCars / 10) }).map((_, i) => {
       // Only show page number if it has data
       const hasData = (i * 10) < totalCars;
-      return hasData && (
-        <Button
-          key={i}
-          variant={pageNo === i ? "filled" : "outlined"}
-          size="sm"
-          onClick={() => setPageNo(i)}
-          className="min-w-[40px]"
-        >
-          {i + 1}
-        </Button>
+      return (
+        hasData && (
+          <Button
+            key={i}
+            variant={pageNo === i ? "filled" : "outlined"}
+            size="sm"
+            onClick={() => setPageNo(i)}
+            className="min-w-[40px]"
+          >
+            {i + 1}
+          </Button>
+        )
       );
     })}
 
@@ -615,5 +620,4 @@ const SellForCar = () => {
     </div>
   );
 };
-
 export default SellForCar;
